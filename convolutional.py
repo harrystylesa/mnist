@@ -5,6 +5,8 @@
 
 
 # coding: utf-8
+import os
+
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
@@ -115,8 +117,13 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 # In[ ]:
 
+config = tf.ConfigProto()
+config.gpu_options.per_process_gpu_memory_fraction = 0.8
+# 程序最多只能占用指定gpu50%的显存
+config.gpu_options.allow_growth = True      #程序按需申请内存
+# sess = tf.Session(config = config)
 
-sess = tf.InteractiveSession()
+sess = tf.InteractiveSession(config=config)
 sess.run(tf.global_variables_initializer())
 
 for i in range(20000):
